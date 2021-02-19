@@ -1,70 +1,29 @@
-import React, { useState, useEffect } from 'react';
+// https://reactrouter.com/web/guides/quick-start
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Menu from './Menu';
+import Users from './Users';
 
-// React hooks 
-// https://es.reactjs.org/docs/hooks-intro.html
-const App = () => {
+const Prueba = () => <div>hola</div>;
 
-  const [usuarios, setUsuarios] = useState([]);
-
-  // useEffect de forma similar a componentDidMount y componentDidUpdate
-  // https://es.reactjs.org/docs/hooks-effect.html
-  useEffect(() => {
-    setUsuarios([
-      {
-        nombre: 'Rodolfo',
-        correo: 'Rodolfo@platzi.com',
-        enlace: 'Rodolfo.com'
-      },
-      {
-        nombre: 'Antonio',
-        correo: 'Antonio@platzi.com',
-        enlace: 'Antonio.com'
-      },
-      {
-        nombre: 'Ricardo',
-        correo: 'Ricardo@platzi.com',
-        enlace: 'Ricardo.com'
-      },
-    ]);
-  });
-
-	const ponerFilas = () => usuarios.map((usuario) => (
-		<tr>
-			<td>
-				{ usuario.nombre }
-			</td>
-			<td>
-				{ usuario.correo }
-			</td>
-			<td>
-				{ usuario.enlace }
-			</td>
-		</tr>
-	));
-
+export default function App() {
   return (
-    <div className="margen">
-      <table className="tabla">
-        <thead>
-          <tr>
-            <th>
-              Nombre
-            </th>
-            <th>
-              Correo
-            </th>
-            <th>
-              Enlace
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          { ponerFilas() }
-        </tbody>
-      </table>
-    </div>
+    <Router>
+      <div>
+        <Menu />
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <div id="margen">
+          <Switch>
+            <Route exact path='/' component={Users} />
+            <Route exact path='/tareas' component={Prueba} />
+          </Switch>
+        </div>
+      </div>
+    </Router>
   );
-	
-};
-
-export default App;
+}
