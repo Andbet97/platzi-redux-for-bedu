@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import Spinner from '../General/Spinner'
+import Spinner from '../General/Spinner';
+import Error from '../General/Error';
 import { connect } from 'react-redux';
 
 import * as usersActions from '../../actions/usersActions';
@@ -35,6 +36,10 @@ const Users = (props) => {
       return <Spinner />;
     }
 
+    if (props.error) {
+      return <Error error={ props.error } />;
+    }
+
     return (
       <table className="tabla">
         <thead>
@@ -59,7 +64,7 @@ const Users = (props) => {
 
   return (
     <div className="margen">
-      { ponerContenido()}
+      { ponerContenido() }
     </div>
   );
 
