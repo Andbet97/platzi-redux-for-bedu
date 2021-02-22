@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -10,6 +10,14 @@ const Posts = (props) => {
 
     const { key } = useParams();
 
+    const { usuarios, traerTodos } = props;
+
+    useEffect(() => {
+        if (!usuarios.length){
+            traerTodos();
+        }
+    }, [usuarios, traerTodos])
+
     return (
         <div className="margen">
             <div>
@@ -20,9 +28,8 @@ const Posts = (props) => {
 
 };
 
-/*const mapStateToProps = (reducers) => {
+const mapStateToProps = (reducers) => {
   return reducers.usersReducer;
 };
 
-export default connect(mapStateToProps, usersActions)(Users);*/
-export default Posts;
+export default connect(mapStateToProps, usersActions)(Posts);
