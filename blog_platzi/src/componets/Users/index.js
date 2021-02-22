@@ -10,13 +10,15 @@ import * as usersActions from '../../actions/usersActions';
 // https://es.reactjs.org/docs/hooks-intro.html
 const Users = (props) => {
 
-  const { traerTodos } = props;
+  const { usuarios, traerTodos } = props;
 
   // useEffect de forma similar a componentDidMount y componentDidUpdate
   // https://es.reactjs.org/docs/hooks-effect.html
   useEffect(() => {
-    traerTodos();
-  }, [traerTodos]);
+    if (!usuarios.length) {
+      traerTodos();
+    }
+  }, [traerTodos, usuarios]);
 
   const ponerContenido = () => {
     if (props.cargando) {

@@ -1,4 +1,4 @@
-import { TRAER_TODOS, CARGANDO, ERROR } from '../types/postsTypes';
+import { TRAER_POR_USUARIO, CARGANDO, ERROR } from '../types/postsTypes';
 
 const INITIAL_STATE = {
 	posts: [],
@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 
 const postsReducer = (state = INITIAL_STATE, action) => {
 	switch (action.type) {
-		case TRAER_TODOS:
+		case TRAER_POR_USUARIO:
 			return {
 				...state,
 				posts: action.payload,
