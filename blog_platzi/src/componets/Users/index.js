@@ -16,7 +16,7 @@ const Users = (props) => {
   }, [traerTodos]);
 
 	const ponerFilas = () => usuarios.map((usuario) => (
-		<tr>
+		<tr key = { usuario.id }>
 			<td>
 				{ usuario.name }
 			</td>
