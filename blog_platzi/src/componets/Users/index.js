@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  fetchUsers,
+  selectUsers
+} from '../../slices/usersSlice';
 
 // React hooks 
 // https://es.reactjs.org/docs/hooks-intro.html
 const Users = () => {
 
-  const [usuarios, setUsuarios] = useState([]);
+  // 
+  const usuarios = useSelector(selectUsers);
+  const dispatch = useDispatch();
 
-  // useEffect de forma similar a componentDidMount y componentDidUpdate
-  // https://es.reactjs.org/docs/hooks-effect.html
   useEffect(() => {
-    async function fetchData() {
-      const { data } = await axios.get('https://jsonplaceholder.typicode.com/users');
-      setUsuarios(data);
-    }
-    fetchData();
-  }, []);
+    dispatch(fetchUsers());
+  }, [dispatch]);
 
 	const ponerFilas = () => usuarios.map((usuario) => (
 		<tr>
@@ -30,7 +30,7 @@ const Users = () => {
 			</td>
 		</tr>
 	));
-
+  console.log(usuarios);
   return (
     <div className="margen">
       <table className="tabla">

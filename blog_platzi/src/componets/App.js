@@ -2,8 +2,7 @@
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import Menu from './Menu';
 import Users from './Users';
