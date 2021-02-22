@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import * as usersActions from '../../actions/usersActions';
+import * as postsActions from '../../actions/postsActions';
 
 // React hooks 
 // https://es.reactjs.org/docs/hooks-intro.html
@@ -10,14 +11,15 @@ const Posts = (props) => {
 
     const { key } = useParams();
 
-    const { usuarios, traerTodos } = props;
+    const { usuarios, traerTodos, traerPosts } = props;
 
     useEffect(() => {
         if (!usuarios.length){
             traerTodos();
         }
-    }, [usuarios, traerTodos])
-
+        traerPosts();
+    }, [usuarios, traerTodos, traerPosts])
+    console.log(props);
     return (
         <div className="margen">
             <div>
@@ -29,7 +31,16 @@ const Posts = (props) => {
 };
 
 const mapStateToProps = (reducers) => {
-  return reducers.usersReducer;
+    const {usersReducer, postsReducer} = reducers;
+  return {
+      ...usersReducer,
+      ...postsReducer
+    };
 };
 
-export default connect(mapStateToProps, usersActions)(Posts);
+const mapDispatchToProps = {
+	...usersActions,
+	...postsActions
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);
