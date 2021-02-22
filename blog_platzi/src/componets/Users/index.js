@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import * as usersActions from '../../actions/usersActions';
@@ -7,6 +6,8 @@ import * as usersActions from '../../actions/usersActions';
 // React hooks 
 // https://es.reactjs.org/docs/hooks-intro.html
 const Users = (props) => {
+  
+  const { usuarios, traerTodos } = props;
 
   // useEffect de forma similar a componentDidMount y componentDidUpdate
   // https://es.reactjs.org/docs/hooks-effect.html
@@ -16,10 +17,10 @@ const Users = (props) => {
       setUsuarios(data);
     }
     fetchData();*/
-    props.traerTodos();
-  }, []);
+    traerTodos();
+  }, [traerTodos]);
 
-	const ponerFilas = () => props.usuarios.map((usuario) => (
+	const ponerFilas = () => usuarios.map((usuario) => (
 		<tr>
 			<td>
 				{ usuario.name }
