@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 // React hooks 
 // https://es.reactjs.org/docs/hooks-intro.html
-const Users = () => {
-
-  const [usuarios, setUsuarios] = useState([]);
+const Users = (props) => {
 
   // useEffect de forma similar a componentDidMount y componentDidUpdate
   // https://es.reactjs.org/docs/hooks-effect.html
-  useEffect(() => {
+  /*useEffect(() => {
     async function fetchData() {
       const { data } = await axios.get('https://jsonplaceholder.typicode.com/users');
       setUsuarios(data);
     }
     fetchData();
-  }, []);
+  }, []);*/
 
-	const ponerFilas = () => usuarios.map((usuario) => (
+	const ponerFilas = () => props.usuarios.map((usuario) => (
 		<tr>
 			<td>
 				{ usuario.name }
@@ -30,6 +29,7 @@ const Users = () => {
 			</td>
 		</tr>
 	));
+  console.log(props);
 
   return (
     <div className="margen">
@@ -56,4 +56,8 @@ const Users = () => {
 	
 };
 
-export default Users;
+const mapStateToProps = (reducers) => {
+	return reducers.usersReducer;
+};
+
+export default connect(mapStateToProps, {/*Accion Creator*/})(Users);
