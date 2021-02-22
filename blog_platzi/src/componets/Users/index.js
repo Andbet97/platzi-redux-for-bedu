@@ -12,11 +12,6 @@ const Users = (props) => {
   // useEffect de forma similar a componentDidMount y componentDidUpdate
   // https://es.reactjs.org/docs/hooks-effect.html
   useEffect(() => {
-    /*async function fetchData() {
-      const { data } = await axios.get('https://jsonplaceholder.typicode.com/users');
-      setUsuarios(data);
-    }
-    fetchData();*/
     traerTodos();
   }, [traerTodos]);
 
@@ -33,7 +28,6 @@ const Users = (props) => {
 			</td>
 		</tr>
 	));
-  console.log(props);
 
   return (
     <div className="margen">
