@@ -2,19 +2,22 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
+import * as usersActions from '../../actions/usersActions';
+
 // React hooks 
 // https://es.reactjs.org/docs/hooks-intro.html
 const Users = (props) => {
 
   // useEffect de forma similar a componentDidMount y componentDidUpdate
   // https://es.reactjs.org/docs/hooks-effect.html
-  /*useEffect(() => {
-    async function fetchData() {
+  useEffect(() => {
+    /*async function fetchData() {
       const { data } = await axios.get('https://jsonplaceholder.typicode.com/users');
       setUsuarios(data);
     }
-    fetchData();
-  }, []);*/
+    fetchData();*/
+    props.traerTodos();
+  }, []);
 
 	const ponerFilas = () => props.usuarios.map((usuario) => (
 		<tr>
@@ -60,4 +63,4 @@ const mapStateToProps = (reducers) => {
 	return reducers.usersReducer;
 };
 
-export default connect(mapStateToProps, {/*Accion Creator*/})(Users);
+export default connect(mapStateToProps, usersActions)(Users);
