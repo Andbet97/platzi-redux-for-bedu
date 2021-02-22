@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Spinner from '../General/Spinner';
 import Error from '../General/Error';
+import Tabla from './Tabla';
 import { connect } from 'react-redux';
 
 import * as usersActions from '../../actions/usersActions';
@@ -9,7 +10,7 @@ import * as usersActions from '../../actions/usersActions';
 // https://es.reactjs.org/docs/hooks-intro.html
 const Users = (props) => {
 
-  const { usuarios, traerTodos } = props;
+  const { traerTodos } = props;
 
   // useEffect de forma similar a componentDidMount y componentDidUpdate
   // https://es.reactjs.org/docs/hooks-effect.html
@@ -17,54 +18,26 @@ const Users = (props) => {
     traerTodos();
   }, [traerTodos]);
 
-  const ponerFilas = () => usuarios.map((usuario) => (
-    <tr key={usuario.id}>
-      <td>
-        {usuario.name}
-      </td>
-      <td>
-        {usuario.email}
-      </td>
-      <td>
-        {usuario.website}
-      </td>
-    </tr>
-  ));
-
   const ponerContenido = () => {
     if (props.cargando) {
       return <Spinner />;
     }
 
     if (props.error) {
-      return <Error error={ props.error } />;
+      return <Error error={props.error} />;
     }
 
     return (
-      <table className="tabla">
-        <thead>
-          <tr>
-            <th>
-              Nombre
-            </th>
-            <th>
-              Correo
-            </th>
-            <th>
-              Enlace
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {ponerFilas()}
-        </tbody>
-      </table>
+      <Tabla />
     );
   }
 
   return (
     <div className="margen">
-      { ponerContenido() }
+      <div>
+        <h1>Usuarios</h1>
+        {ponerContenido()}
+      </div>
     </div>
   );
 
