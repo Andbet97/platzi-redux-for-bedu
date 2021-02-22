@@ -20,7 +20,7 @@ const Posts = (props) => {
                 await traerTodos();
                 return;
             }
-            if (props.usersReducer.error !== "") {
+            if (props.usersReducer.error) {
                 return;
             }
             if (!('posts_key' in props.usersReducer.usuarios[key])) {
@@ -44,18 +44,58 @@ const Posts = (props) => {
             return <Error error={usersReducer.error} />;
         }
 
-        const {name} = usersReducer.usuarios[key];
+        const { name } = usersReducer.usuarios[key];
 
-		return (
-			<h1>
-				Publicaciones de { name }
-			</h1>
-		);
+        return (
+            <h1>
+                Publicaciones de { name}
+            </h1>
+        );
     };
+
+    const ponerPosts = () => {
+        const {
+            usersReducer,
+            postsReducer,
+        } = props;
+
+        if (!usersReducer.usuarios.length) return;
+        if (usersReducer.error) return;
+
+        if (postsReducer.cargando) {
+            return <Spinner />;
+        }
+
+        if (postsReducer.error) {
+			return <Error error={ postsReducer.error } />
+		}
+
+        if (!postsReducer.posts.length) return;
+        if (!('posts_key' in usersReducer.usuarios[key])) return;
+
+        const { posts_key } = usersReducer.usuarios[key];
+
+        return postsReducer.posts[posts_key].map((post) => (
+            <div
+				key={post.id}
+				className='pub_titulo'
+				onClick={ ()=>alert(post.id) }
+			>
+				<h2>
+					{ post.title }
+				</h2>
+				<h3>
+					{ post.body }
+				</h3>
+			</div>
+        ));
+    };
+
     console.log(props);
     return (
         <div>
             {ponerUsuario()}
+            {ponerPosts()}
         </div>
     );
 
