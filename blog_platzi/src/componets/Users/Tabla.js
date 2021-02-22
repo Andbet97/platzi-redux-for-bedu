@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { FaEye } from "react-icons/fa";
 import * as usersActions from '../../actions/usersActions';
+import { Link } from 'react-router-dom';
 
 const Tabla = (props) => {
 
     const { usuarios } = props;
 
-    const ponerFilas = () => usuarios.map((usuario) => (
+    const ponerFilas = () => usuarios.map((usuario, key) => (
         <tr key={usuario.id}>
             <td>
                 {usuario.name}
@@ -16,6 +18,11 @@ const Tabla = (props) => {
             </td>
             <td>
                 {usuario.website}
+            </td>
+            <td>
+                <Link className="link" to={ `/publicaciones/${key}` }>
+                    <FaEye />
+                </Link>
             </td>
         </tr>
     ));

@@ -5,6 +5,7 @@ import {
   Route
 } from "react-router-dom";
 import Menu from './Menu';
+import Posts from './Posts';
 import Users from './Users';
 
 const Prueba = () => <div>hola</div>;
@@ -20,6 +21,7 @@ export default function App() {
           <Switch>
             <Route exact path='/' component={Users} />
             <Route exact path='/tareas' component={Prueba} />
+            <Route exact path='/publicaciones/:key' component={Posts} />
           </Switch>
         </div>
       </div>
