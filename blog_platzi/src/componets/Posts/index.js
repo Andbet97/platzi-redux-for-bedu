@@ -67,37 +67,43 @@ const Posts = (props) => {
         }
 
         if (postsReducer.error) {
-			return <Error error={ postsReducer.error } />
-		}
+            return <Error error={postsReducer.error} />
+        }
 
         if (!postsReducer.posts.length) return;
         if (!('posts_key' in usersReducer.usuarios[key])) return;
 
         const { posts_key } = usersReducer.usuarios[key];
 
-        return postsReducer.posts[posts_key].map((post) => (
+        return mostrarInfo(postsReducer.posts, posts_key);
+    };
+
+    const mostrarInfo = (posts, posts_key) => {
+        const { openClose } = props
+        return posts[posts_key].map((post, com_key) => (
             <div
-				key={post.id}
-				className='pub_titulo'
-				onClick={ ()=>alert(post.id) }
-			>
-				<h2>
-					{ post.title }
-				</h2>
-				<h3>
-					{ post.body }
-				</h3>
-			</div>
+                key={post.id}
+                className='pub_titulo'
+                onClick={() => openClose(key, com_key)}
+            >
+                <h2>
+                    {post.title}
+                </h2>
+                <h3>
+                    {post.body}
+                </h3>
+                {post.abierto ? 'abierto' : 'cerrado'}
+            </div>
         ));
     };
 
-    console.log(props);
-    return (
-        <div>
-            {ponerUsuario()}
-            {ponerPosts()}
-        </div>
-    );
+console.log(props);
+return (
+    <div>
+        {ponerUsuario()}
+        {ponerPosts()}
+    </div>
+);
 
 };
 

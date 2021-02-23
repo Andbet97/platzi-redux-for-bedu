@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { TRAER_POR_USUARIO, CARGANDO, ERROR } from '../types/postsTypes';
+import { ACTUALIZAR, CARGANDO, ERROR } from '../types/postsTypes';
 
 import * as usersTypes from '../types/usersTypes';
 
@@ -18,13 +18,19 @@ export const traerPostsPorUsuario = (key) => async (dispatch, getState) => {
         const url = 'https://jsonplaceholder.typicode.com/posts?userId=' + id;
         const { data } = await axios.get(url);
 
+        const news = data.map((post) => ({
+            ...post,
+            comentarios: [],
+            abierto: false
+        }));
+
         const posts_updated = [
             ...posts,
-            data
+            news
         ];
 
         dispatch({
-            type: TRAER_POR_USUARIO,
+            type: ACTUALIZAR,
             payload: posts_updated
         });
 
@@ -40,11 +46,31 @@ export const traerPostsPorUsuario = (key) => async (dispatch, getState) => {
             payload: users_updated
         });
     } catch (error) {
-		console.log(error.message);
-		dispatch({
-			type: ERROR,
-			payload: 'Publicaciones no disponibles.'
-		});
-	}
+        console.log(error.message);
+        dispatch({
+            type: ERROR,
+            payload: 'Publicaciones no disponibles.'
+        });
+    }
 
 };
+
+
+export const openClose = (key, com_key) => (dispatch, getState) => {
+    const { posts } = getState().postsReducer;
+    const selected = posts[key][com_key];
+
+    const updated = {
+        ...selected,
+        abierto: !selected.abierto
+    };
+
+    const posts_updated = [ ...posts ];
+    posts_updated[key] = [ ...posts[key] ];
+    posts_updated[key][com_key] = updated;
+
+    dispatch({
+        type: ACTUALIZAR,
+        payload: posts_updated
+    });
+}
