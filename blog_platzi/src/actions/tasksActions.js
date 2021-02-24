@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { TRAER_TODAS, CARGANDO, ERROR } from '../types/tasksTypes';
+import {
+    TRAER_TODAS,
+    CARGANDO,
+    ERROR,
+    CAMBIO_USER_ID,
+    CAMBIO_TITLE
+} from '../types/tasksTypes';
 
 export const traerTodas = () => async (dispatch) => {
     dispatch({
@@ -30,4 +36,18 @@ export const traerTodas = () => async (dispatch) => {
             payload: 'Tareas no disponibles.'
         });
     }
+};
+
+export const changeUserId = (value) => (dispatch) => {
+    dispatch({
+        type: CAMBIO_USER_ID,
+        payload: value
+    });
+};
+
+export const changeTitle = (value) => (dispatch) => {
+    dispatch({
+        type: CAMBIO_TITLE,
+        payload: value
+    });
 };

@@ -106,7 +106,6 @@ const Posts = (props) => {
         }
     };
 
-    console.log(props);
     return (
         <div>
             {ponerUsuario()}
