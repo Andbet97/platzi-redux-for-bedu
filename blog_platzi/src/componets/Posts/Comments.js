@@ -10,23 +10,23 @@ const Comments = (props) => {
         comments
     } = props;
 
-    if (com_cargando && !comments.length) {
-        return <Spinner />;
-    }
-
     if (com_error.length) {
         return <Error error={com_error} />
     }
 
+    if (com_cargando && !comments.length) {
+        return <Spinner />;
+    }
+
     const ponerComentarios = () => (
-		comments.map((comentario) => (
-			<li key={ comentario.id }>
-				<b><u>{ comentario.email }</u></b>
-				<br />
-				{ comentario.body }
-			</li>
-		))
-	);
+        comments.map((comentario) => (
+            <li key={comentario.id}>
+                <b><u>{comentario.email}</u></b>
+                <br />
+                { comentario.body}
+            </li>
+        ))
+    );
 
     return (
         <ul>
