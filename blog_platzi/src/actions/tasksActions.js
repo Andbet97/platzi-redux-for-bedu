@@ -6,7 +6,8 @@ import {
     CAMBIO_USER_ID,
     CAMBIO_TITLE,
     SAVE,
-    UPDATE
+    UPDATE,
+    CLEAN
 } from '../types/tasksTypes';
 
 export const traerTodas = () => async (dispatch) => {
@@ -144,4 +145,10 @@ export const deleteTask = (tsk_id) => async (dispatch) => {
             payload: 'Servicio no diponible.'
         });
     }
+};
+
+export const cleanForm = () => (dispatch) => {
+    dispatch({
+        type: CLEAN
+    });
 };

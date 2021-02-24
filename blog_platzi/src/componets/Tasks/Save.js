@@ -16,7 +16,8 @@ const Save = (props) => {
         changeUserId,
         changeTitle,
         addTask,
-        editTask
+        editTask,
+        cleanForm
     } = props;
 
     const { usr_id, tsk_id } = useParams();
@@ -27,6 +28,8 @@ const Save = (props) => {
             const task = tasks[usr_id][tsk_id];
             changeUserId(task.userId);
             changeTitle(task.title);
+        } else {
+            cleanForm();
         }
     }, []);
 
