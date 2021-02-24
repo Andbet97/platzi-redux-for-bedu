@@ -30,7 +30,7 @@ const Posts = (props) => {
         }
 
         fetchData();
-    }, [props.usersReducer.usuarios])
+    }, [props.usersReducer.usuarios, key])
 
     const ponerUsuario = () => {
         const {
@@ -99,7 +99,7 @@ const Posts = (props) => {
     };
 
     const mostrarComentarios = (key, com_key, comments) => {
-        const { openClose, getComments, postsReducer } = props
+        const { openClose, getComments } = props
         openClose(key, com_key);
         if (!comments.length) {
             getComments(key, com_key);
