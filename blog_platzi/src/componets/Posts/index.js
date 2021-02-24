@@ -6,6 +6,7 @@ import Error from '../General/Error';
 
 import * as usersActions from '../../actions/usersActions';
 import * as postsActions from '../../actions/postsActions';
+import Comments from './Comments';
 
 // React hooks 
 // https://es.reactjs.org/docs/hooks-intro.html
@@ -79,12 +80,11 @@ const Posts = (props) => {
     };
 
     const mostrarInfo = (posts, posts_key) => {
-        const { openClose } = props
         return posts[posts_key].map((post, com_key) => (
             <div
                 key={post.id}
                 className='pub_titulo'
-                onClick={() => openClose(key, com_key)}
+                onClick={() => mostrarComentarios(key, com_key, post.comentarios)}
             >
                 <h2>
                     {post.title}
@@ -92,18 +92,27 @@ const Posts = (props) => {
                 <h3>
                     {post.body}
                 </h3>
-                {post.abierto ? 'abierto' : 'cerrado'}
+
+                {post.abierto ? <Comments comments={post.comentarios}/> : ''}
             </div>
         ));
     };
 
-console.log(props);
-return (
-    <div>
-        {ponerUsuario()}
-        {ponerPosts()}
-    </div>
-);
+    const mostrarComentarios = (key, com_key, comments) => {
+        const { openClose, getComments, postsReducer } = props
+        openClose(key, com_key);
+        if (!comments.length) {
+            getComments(key, com_key);
+        }
+    };
+
+    console.log(props);
+    return (
+        <div>
+            {ponerUsuario()}
+            {ponerPosts()}
+        </div>
+    );
 
 };
 

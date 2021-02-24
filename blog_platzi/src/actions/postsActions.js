@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { ACTUALIZAR, CARGANDO, ERROR } from '../types/postsTypes';
+import {
+	ACTUALIZAR,
+	CARGANDO,
+	ERROR,
+	COM_ACTUALIZAR,
+	COM_CARGANDO,
+	COM_ERROR
+} from '../types/postsTypes';
 
 import * as usersTypes from '../types/usersTypes';
 
@@ -65,12 +72,47 @@ export const openClose = (key, com_key) => (dispatch, getState) => {
         abierto: !selected.abierto
     };
 
-    const posts_updated = [ ...posts ];
-    posts_updated[key] = [ ...posts[key] ];
+    const posts_updated = [...posts];
+    posts_updated[key] = [...posts[key]];
     posts_updated[key][com_key] = updated;
 
     dispatch({
         type: ACTUALIZAR,
         payload: posts_updated
     });
-}
+};
+
+export const getComments = (key, com_key) => async (dispatch, getState) => {
+    dispatch({
+        type: COM_CARGANDO
+    });
+
+    const { posts } = getState().postsReducer;
+    const selected = posts[key][com_key];
+
+    try {
+        const url = 'https://jsonplaceholder.typicode.com/comments?postId=' + selected.id;
+        const { data } = await axios.get(url);
+
+        const updated = {
+            ...selected,
+            comentarios: data
+        };
+
+        const posts_updated = [...posts];
+        posts_updated[key] = [...posts[key]];
+        posts_updated[key][com_key] = updated;
+
+        dispatch({
+            type: COM_ACTUALIZAR,
+            payload: posts_updated
+        });
+
+    } catch (error) {
+        console.log(error.message);
+        dispatch({
+            type: COM_ERROR,
+            payload: 'Comentarios no disponibles.'
+        });
+    }
+};
