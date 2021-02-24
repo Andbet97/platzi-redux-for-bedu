@@ -94,7 +94,7 @@ export const editTask = (task) => async (dispatch) => {
         console.log(error.message);
         dispatch({
             type: ERROR,
-            payload: 'No se puede agregar, intentelo más tarde.'
+            payload: 'No se puede editar, intentelo más tarde.'
         });
     }
 };
@@ -121,4 +121,27 @@ export const taskChange = (usr_id, tsk_id) => (dispatch, getState) => {
         payload: updated_task
     });
 
+};
+
+export const deleteTask = (tsk_id) => async (dispatch) => {
+    dispatch({
+        type: CARGANDO
+    });
+
+    try {
+        const { data } = await axios.delete(`https://jsonplaceholder.typicode.com/todos/${tsk_id}`);
+
+        console.log('deleted: ', data);
+        dispatch({
+            type: TRAER_TODAS,
+            payload: {}
+        });
+    }
+    catch (error) {
+        console.log(error.message);
+        dispatch({
+            type: ERROR,
+            payload: 'Servicio no diponible.'
+        });
+    }
 };

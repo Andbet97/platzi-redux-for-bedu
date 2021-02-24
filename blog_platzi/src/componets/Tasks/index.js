@@ -8,7 +8,7 @@ import * as tasksActions from '../../actions/tasksActions';
 
 const Tasks = (props) => {
 
-    const { traerTodas } = props;
+    const { traerTodas, deleteTask } = props;
 
     // useEffect de forma similar a componentDidMount y componentDidUpdate
     // https://es.reactjs.org/docs/hooks-effect.html
@@ -16,7 +16,7 @@ const Tasks = (props) => {
         if (!Object.keys(props.tasks).length) {
             traerTodas();
         }
-    }, [traerTodas]);
+    }, [props.tasks]);
 
     const mostrarContenido = () => {
         const { tasks, cargando, error } = props;
@@ -60,10 +60,8 @@ const Tasks = (props) => {
                         Editar
                     </Link>
                 </button>
-                <button className="m_left">
-                    <Link className="link" to={`/tareas/eliminar/${user_id}/${task_id}`}>
-                        Eliminar
-                    </Link>
+                <button className="m_left" onClick={() => deleteTask(task_id) }>
+                    Eliminar
                 </button>
             </div>
         ));
