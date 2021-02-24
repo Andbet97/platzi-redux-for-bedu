@@ -21,7 +21,8 @@ export default function App() {
           <Switch>
             <Route exact path='/' component={Users} />
             <Route exact path='/tareas' component={Tasks} />
-            <Route axact path='/tareas/guardar' component={tasksSave} />
+            <Route exact path='/tareas/guardar' component={tasksSave} />
+            <Route exact path='/tareas/guardar/:usr_id/:tsk_id' component={tasksSave} />
             <Route exact path='/publicaciones/:key' component={Posts} />
           </Switch>
         </div>

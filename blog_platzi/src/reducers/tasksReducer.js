@@ -4,7 +4,8 @@ import {
 	ERROR,
 	CAMBIO_USER_ID,
 	CAMBIO_TITLE,
-	ADD
+	SAVE,
+	UPDATE
 } from '../types/tasksTypes';
 
 const INITIAL_STATE = {
@@ -49,7 +50,7 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
 				title: action.payload
 			};
 
-		case ADD:
+		case SAVE:
 			return {
 				...state,
 				tasks: {},
@@ -58,6 +59,12 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
 				regresar: true,
 				user_id: '',
 				title: ''
+			}
+		
+		case UPDATE:
+			return {
+				...state,
+				tasks: action.payload
 			}
 
 		default: return state;

@@ -5,7 +5,8 @@ import {
     ERROR,
     CAMBIO_USER_ID,
     CAMBIO_TITLE,
-    ADD
+    SAVE,
+    UPDATE
 } from '../types/tasksTypes';
 
 export const traerTodas = () => async (dispatch) => {
@@ -61,10 +62,9 @@ export const addTask = (task) => async (dispatch) => {
     try {
         const { data } = await axios.post('https://jsonplaceholder.typicode.com/todos', task);
 
-        console.log(data);
+        console.log('saved: ', data);
         dispatch({
-            type: ADD,
-            payload: data
+            type: SAVE
         });
     }
     catch (error) {
@@ -74,4 +74,51 @@ export const addTask = (task) => async (dispatch) => {
             payload: 'No se puede agregar, intentelo más tarde.'
         });
     }
+};
+
+
+export const editTask = (task) => async (dispatch) => {
+    dispatch({
+        type: CARGANDO
+    });
+
+    try {
+        const { data } = await axios.put(`https://jsonplaceholder.typicode.com/todos/${task.id}`, task);
+
+        console.log('edited: ', data);
+        dispatch({
+            type: SAVE
+        });
+    }
+    catch (error) {
+        console.log(error.message);
+        dispatch({
+            type: ERROR,
+            payload: 'No se puede agregar, intentelo más tarde.'
+        });
+    }
+};
+
+export const taskChange = (usr_id, tsk_id) => (dispatch, getState) => {
+    const { tasks } = getState().tasksReducer;
+    const task = tasks[usr_id][tsk_id];
+
+    const updated_task = {
+        ...tasks
+    };
+
+    updated_task[usr_id] = {
+        ...tasks[usr_id]
+    };
+
+    updated_task[usr_id][tsk_id] = {
+        ...tasks[usr_id][tsk_id],
+        completed: !task.completed
+    }
+
+    dispatch({
+        type: UPDATE,
+        payload: updated_task
+    });
+
 };

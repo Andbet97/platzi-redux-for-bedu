@@ -42,15 +42,29 @@ const Tasks = (props) => {
     };
 
     const ponerTareas = (user_id) => {
-        const { tasks } = props;
+        const { tasks, taskChange } = props;
         const to_user = {
             ...tasks[user_id]
         }
 
         return Object.keys(to_user).map((task_id) => (
             <div key={task_id}>
-                <input type="checkbox" defaultChecked={to_user[task_id].completed} />
+                <input
+                    type="checkbox"
+                    defaultChecked={to_user[task_id].completed}
+                    onChange={ () => taskChange(user_id, task_id) }
+                />
                 {to_user[task_id].title}
+                <button className="m_left">
+                    <Link className="link" to={`/tareas/guardar/${user_id}/${task_id}`}>
+                        Editar
+                    </Link>
+                </button>
+                <button className="m_left">
+                    <Link className="link" to={`/tareas/eliminar/${user_id}/${task_id}`}>
+                        Eliminar
+                    </Link>
+                </button>
             </div>
         ));
     };

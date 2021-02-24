@@ -1,14 +1,34 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import Spinner from '../General/Spinner';
 import Error from '../General/Error';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 
 import * as tasksActions from '../../actions/tasksActions';
 
 const Save = (props) => {
 
-    const { user_id, title, cargando, error, changeUserId, changeTitle, addTask } = props;
+    const {
+        user_id,
+        title,
+        cargando,
+        error,
+        changeUserId,
+        changeTitle,
+        addTask,
+        editTask
+    } = props;
+
+    const { usr_id, tsk_id } = useParams();
+
+    useEffect(() => {
+        const { tasks } = props;
+        if (usr_id && tsk_id) {
+            const task = tasks[usr_id][tsk_id];
+            changeUserId(task.userId);
+            changeTitle(task.title);
+        }
+    }, []);
 
     const userIdHandler = (event) => {
         changeUserId(event.target.value);
@@ -19,12 +39,23 @@ const Save = (props) => {
     };
 
     const saveHandler = () => {
+        const { tasks } = props;
         const new_task = {
             userId: user_id,
             title,
             completed: false
         };
-        addTask(new_task);
+        if (usr_id && tsk_id) {
+            const task = tasks[usr_id][tsk_id];
+            const edited_task = {
+                ...new_task,
+                completed: task.completed,
+                id: task.id
+            }
+            editTask(edited_task);
+        } else {
+            addTask(new_task);
+        }
     };
 
     const deshabilitar = () => {
