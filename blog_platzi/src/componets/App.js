@@ -6,9 +6,8 @@ import {
 } from "react-router-dom";
 import Menu from './Menu';
 import Posts from './Posts';
+import Tasks from "./Tasks";
 import Users from './Users';
-
-const Prueba = () => <div>hola</div>;
 
 export default function App() {
   return (
@@ -20,7 +19,7 @@ export default function App() {
         <div id="margen">
           <Switch>
             <Route exact path='/' component={Users} />
-            <Route exact path='/tareas' component={Prueba} />
+            <Route exact path='/tareas' component={Tasks} />
             <Route exact path='/publicaciones/:key' component={Posts} />
           </Switch>
         </div>
