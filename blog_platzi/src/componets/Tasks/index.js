@@ -13,7 +13,9 @@ const Tasks = (props) => {
     // useEffect de forma similar a componentDidMount y componentDidUpdate
     // https://es.reactjs.org/docs/hooks-effect.html
     useEffect(() => {
-        traerTodas();
+        if (!Object.keys(props.tasks).length) {
+            traerTodas();
+        }
     }, [traerTodas]);
 
     const mostrarContenido = () => {

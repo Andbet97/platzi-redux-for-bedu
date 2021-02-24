@@ -3,7 +3,8 @@ import {
 	CARGANDO,
 	ERROR,
 	CAMBIO_USER_ID,
-	CAMBIO_TITLE 
+	CAMBIO_TITLE,
+	ADD
 } from '../types/tasksTypes';
 
 const INITIAL_STATE = {
@@ -11,7 +12,8 @@ const INITIAL_STATE = {
 	cargando: false,
 	error: '',
 	user_id: '',
-	title: ''
+	title: '',
+	regresar: false
 };
 
 const tasksReducer = (state = INITIAL_STATE, action) => {
@@ -20,7 +22,9 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				tasks: action.payload,
-				cargando: false
+				cargando: false,
+				error: '',
+				regresar: false
 			};
 
 		case CARGANDO:
@@ -32,7 +36,7 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
 				error: action.payload,
 				cargando: false
 			};
-		
+
 		case CAMBIO_USER_ID:
 			return {
 				...state,
@@ -44,7 +48,18 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				title: action.payload
 			};
-			
+
+		case ADD:
+			return {
+				...state,
+				tasks: {},
+				cargando: false,
+				error: '',
+				regresar: true,
+				user_id: '',
+				title: ''
+			}
+
 		default: return state;
 	};
 };

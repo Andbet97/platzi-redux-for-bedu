@@ -4,7 +4,8 @@ import {
     CARGANDO,
     ERROR,
     CAMBIO_USER_ID,
-    CAMBIO_TITLE
+    CAMBIO_TITLE,
+    ADD
 } from '../types/tasksTypes';
 
 export const traerTodas = () => async (dispatch) => {
@@ -50,4 +51,27 @@ export const changeTitle = (value) => (dispatch) => {
         type: CAMBIO_TITLE,
         payload: value
     });
+};
+
+export const addTask = (task) => async (dispatch) => {
+    dispatch({
+        type: CARGANDO
+    });
+
+    try {
+        const { data } = await axios.post('https://jsonplaceholder.typicode.com/todos', task);
+
+        console.log(data);
+        dispatch({
+            type: ADD,
+            payload: data
+        });
+    }
+    catch (error) {
+        console.log(error.message);
+        dispatch({
+            type: ERROR,
+            payload: 'No se puede agregar, intentelo más tarde.'
+        });
+    }
 };
