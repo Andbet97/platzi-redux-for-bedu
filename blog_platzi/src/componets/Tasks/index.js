@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Spinner from '../General/Spinner';
 import Error from '../General/Error';
+import { Link } from 'react-router-dom';
 
 import * as tasksActions from '../../actions/tasksActions';
 
@@ -52,10 +53,13 @@ const Tasks = (props) => {
         ));
     };
 
-    console.log(props);
-
     return (
         <div>
+            <button>
+                <Link className="link" to="/tareas/guardar">
+                    Agregar
+                </Link>
+            </button>
             {mostrarContenido()}
         </div>
     );
